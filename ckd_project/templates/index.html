@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CKD Prediction</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f0f4f8; margin: 0; padding: 0; }
+    .container { max-width: 960px; margin: 2rem auto; padding: 2rem; background: #ffffff; border-radius: 16px; box-shadow: 0 18px 40px rgba(15, 23, 42, 0.1); }
+    h1 { margin-top: 0; color: #02070c; }
+    p { color: #475569; line-height: 1.6; }
+    .row { display: flex; flex-wrap: wrap; gap: 1rem; }
+    .field { flex: 1 1 240px; min-width: 240px; }
+    label { display: block; margin-bottom: 0.5rem; color: #334155; font-weight: 600; }
+    input, select { width: 100%; padding: 0.85rem 1rem; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 0.98rem; color: #0f172a; }
+    button { margin-top: 1.25rem; padding: 1rem 1.5rem; border: none; border-radius: 10px; background: #2563eb; color: #ffffff; font-size: 1rem; cursor: pointer; }
+    button:hover { background: #1d4ed8; }
+    .note { margin-top: 1.5rem; color: #64748b; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Chronic Kidney Disease Prediction</h1>
+    <p>Enter patient data and submit to get a prediction.</p>
+    <form method="post" action="/predict">
+      <div class="row">
+        {% for col in numeric_cols %}
+        <div class="field">
+          <label for="{{ col }}">{{ field_labels[col] }}</label>
+          <input id="{{ col }}" name="{{ col }}" type="text" placeholder="{{ field_labels[col] }}" />
+        </div>
+        {% endfor %}
+      </div>
+      <div class="row">
+        {% for col in categorical_cols %}
+        <div class="field">
+          <label for="{{ col }}">{{ field_labels[col] }}</label>
+          <select id="{{ col }}" name="{{ col }}">
+            <option value="">Select {{ field_labels[col] }}</option>
+            {% for option in categorical_options[col] %}
+            <option value="{{ option }}">{{ option }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        {% endfor %}
+      </div>
+      <button type="submit">Predict CKD</button>
+    </form>
+    <p class="note">Refresh the page if it still appears blank after restarting the server.</p>
+  </div>
+</body>
+</html>

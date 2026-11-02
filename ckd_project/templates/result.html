@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Prediction Result</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #eff6ff; margin: 0; padding: 0; }
+    .container { max-width: 760px; margin: 2rem auto; padding: 2rem; background: #ffffff; border-radius: 16px; box-shadow: 0 18px 40px rgba(15, 23, 42, 0.1); }
+    h1 { margin-top: 0; color: #1f2937; }
+    .card { padding: 1.5rem; border-radius: 14px; background: #f8fafc; border: 1px solid #e2e8f0; }
+    .result-positive { color: #dc2626; font-weight: 700; }
+    .result-negative { color: #16a34a; font-weight: 700; }
+    .breakdown dt { margin-top: 1rem; font-weight: 700; color: #334155; }
+    .breakdown dd { margin: 0.25rem 0 0 0; color: #475569; }
+    .button-row { margin-top: 1.5rem; }
+    .button-row a { display: inline-block; padding: 0.9rem 1.4rem; border-radius: 10px; background: #2563eb; color: #ffffff; text-decoration: none; }
+    .error { color: #b91c1c; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Prediction Result</h1>
+    <div class="card">
+      {% if error %}
+      <p class="error">Error: {{ error }}</p>
+      {% else %}
+      <p class="{{ result_class }}">{{ result_text }}</p>
+      <dl class="breakdown">
+        <dt>Random Forest Confidence</dt>
+        <dd>{{ breakdown.random_forest }}%</dd>
+        <dt>XGBoost Confidence</dt>
+        <dd>{{ breakdown.xgboost }}%</dd>
+        <dt>Deep Learning Confidence</dt>
+        <dd>{{ breakdown.deep_learning }}%</dd>
+        <dt>Hybrid Final Confidence</dt>
+        <dd>{{ breakdown.hybrid_final }}%</dd>
+      </dl>
+      {% endif %}
+    </div>
+    <div class="button-row"><a href="/">Back to form</a></div>
+  </div>
+</body>
+</html>
